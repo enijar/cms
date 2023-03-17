@@ -37,7 +37,8 @@ export const FieldWrapper = styled.div`
   }
 
   button {
-    all: unset;
+    appearance: none;
+    border: none;
     background-color: #ffffff;
     color: #000000;
     padding: 0.25em 0.5em;
