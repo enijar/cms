@@ -35,13 +35,4 @@ export const FieldWrapper = styled.div`
     font-size: 0.75em;
     max-height: 50ch;
   }
-
-  button {
-    appearance: none;
-    border: none;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0.25em 0.5em;
-    cursor: pointer;
-  }
 `;

@@ -4,6 +4,7 @@ import { ListWrapper } from "@/@cms/fields/list/list.styles";
 import Accordion from "@/components/accordion/accordion";
 import Fields from "@/@cms/components/fields/fields";
 import { ListField } from "@/@cms";
+import Button from "@/@cms/components/button/button";
 
 type Props = {
   field: ListField;
@@ -20,14 +21,14 @@ export default function List({ field }: Props) {
         {value.map((fields, index) => {
           return <Fields key={index} schema={fields} />;
         })}
-        <button
+        <Button
           onClick={() => {
             field.add();
             setValue([...field.value]);
           }}
         >
           Add {pluralize(field.name, 1)}
-        </button>
+        </Button>
       </Accordion>
     </ListWrapper>
   );
