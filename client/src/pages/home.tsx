@@ -1,6 +1,6 @@
 import React from "react";
 import { createSchema, fields, serializeSchema } from "@/@cms";
-import Fields from "@/@cms/fields/fields";
+import Fields from "@/@cms/components/fields/fields";
 
 const schema = createSchema({
   title: fields.text(),

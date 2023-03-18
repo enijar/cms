@@ -2,7 +2,7 @@ import React from "react";
 import pluralize from "pluralize";
 import { ListWrapper } from "@/@cms/fields/list/list.styles";
 import Accordion from "@/components/accordion/accordion";
-import Fields from "@/@cms/fields/fields";
+import Fields from "@/@cms/components/fields/fields";
 import { ListField } from "@/@cms";
 
 type Props = {
