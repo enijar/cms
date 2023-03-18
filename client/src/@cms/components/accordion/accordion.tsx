@@ -4,7 +4,7 @@ import {
   AccordionHeader,
   AccordionInner,
   AccordionWrapper,
-} from "@/components/accordion/accordion-styles";
+} from "@/@cms/components/accordion/accordion-styles";
 import Label from "@/@cms/components/label/label";
 
 type Props = {

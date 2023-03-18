@@ -1,7 +1,7 @@
 import React from "react";
 import pluralize from "pluralize";
 import { ListWrapper } from "@/@cms/fields/list/list.styles";
-import Accordion from "@/components/accordion/accordion";
+import Accordion from "@/@cms/components/accordion/accordion";
 import Fields from "@/@cms/components/fields/fields";
 import { ListField } from "@/@cms";
 import Button from "@/@cms/components/button/button";
