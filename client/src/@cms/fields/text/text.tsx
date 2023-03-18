@@ -1,25 +1,23 @@
 import React from "react";
 import { TextWrapper } from "@/@cms/fields/text/text.styles";
-import { SchemaField } from "@/@cms/types";
-import useField from "@/@cms/hooks/use-field";
+import { TextField } from "@/@cms/cms";
 
 type Props = {
-  schemaField: SchemaField;
-  onChange: (schemaField: SchemaField) => void;
+  field: TextField;
 };
 
-export default function Text({ schemaField, onChange }: Props) {
-  const field = useField(schemaField, onChange);
+export default function Text({ field }: Props) {
+  const [value, setValue] = React.useState<TextField["value"]>(field.value);
 
   return (
     <TextWrapper>
-      <label htmlFor={field.id}>{field.label.formatted}</label>
+      <label>{field.name}</label>
       <input
-        id={field.id}
-        value={field.value}
+        value={value}
         name={field.name}
         onChange={(event) => {
           field.setValue(event.target.value);
+          setValue(field.value);
         }}
       />
     </TextWrapper>
