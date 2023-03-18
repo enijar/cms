@@ -1,53 +1,96 @@
-import { Schema, SchemaFieldOptions, SchemaFields } from "@/@cms/types";
+import { cloneDeep } from "lodash";
 
-export function createSchema(fn: (fields: SchemaFields) => Schema): any {
-  const fields: SchemaFields = {
-    text(options?: SchemaFieldOptions) {
-      return {
-        type: "text",
-        value: "",
-        name: "",
-        options,
-      };
-    },
-    richText(options?: SchemaFieldOptions) {
-      return {
-        type: "richText",
-        value: "",
-        name: "",
-        options,
-      };
-    },
-    image(options?: SchemaFieldOptions) {
-      return {
-        type: "image",
-        value: "",
-        name: "",
-        options,
-      };
-    },
-    list(schema: Schema, options?: SchemaFieldOptions) {
-      return {
-        type: "list",
-        value: "",
-        name: "",
-        options,
-        schema,
-        items: [],
-      };
-    },
-  };
+export type Field = {
+  type: "text" | "richText" | "list";
+  name: string;
+};
 
-  function updateSchema(schema: Schema): Schema {
-    for (const name in schema) {
-      if (!schema.hasOwnProperty(name)) continue;
-      schema[name].name = name;
-      if (schema[name].schema !== undefined) {
-        schema[name].schema = updateSchema(schema[name].schema!);
-      }
+export type TextField = Field & {
+  value: string;
+  setValue: (value: TextField["value"]) => void;
+};
+
+export type RichTextField = Field & {
+  value: string;
+  setValue: (value: RichTextField["value"]) => void;
+};
+
+export type ListField = Field & {
+  fields: Fields;
+  value: Fields[];
+  setValue: (value: ListField["value"]) => void;
+  add: () => void;
+};
+
+export type AllFields = TextField | ListField;
+
+export type Fields = {
+  [name: string]: AllFields;
+};
+
+export type Schema = {
+  [name: string]: AllFields;
+};
+
+export const fields = {
+  text(): TextField {
+    return {
+      type: "text",
+      name: "text",
+      value: "",
+      setValue(value) {
+        this.value = value;
+      },
+    };
+  },
+  richText(): RichTextField {
+    return {
+      type: "richText",
+      name: "richText",
+      value: "",
+      setValue(value) {
+        this.value = value;
+      },
+    };
+  },
+  list(fields: Fields): ListField {
+    return {
+      type: "list",
+      name: "list",
+      fields,
+      value: [],
+      setValue(value) {
+        this.value = value;
+      },
+      add() {
+        this.value.push(createSchema(this.fields));
+      },
+    };
+  },
+};
+
+export function createSchema(fields: Fields): Schema {
+  const schema: Schema = {};
+  for (const name in fields) {
+    const field = cloneDeep(fields[name]);
+    field.name = name;
+    if (field.type === "list") {
+      const listField = field as ListField;
+      listField.value = [createSchema(listField.fields)];
     }
-    return schema;
+    schema[name] = field;
   }
+  return schema;
+}
 
-  return updateSchema(fn(fields));
+export function schemaToFields(schema: Schema): AllFields[] {
+  const fields: AllFields[] = [];
+  for (const name in schema) {
+    fields.push(schema[name]);
+  }
+  return fields;
+}
+
+export function serializeSchema(schema: Schema): string {
+  return JSON.stringify(schema);
 }

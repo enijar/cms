@@ -1,6 +1,6 @@
 import React from "react";
 import { TextWrapper } from "@/@cms/fields/text/text.styles";
-import { TextField } from "@/@cms/cms";
+import { TextField } from "@/@cms";
 
 type Props = {
   field: TextField;

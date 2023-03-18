@@ -5,7 +5,7 @@ import {
   Schema,
   schemaToFields,
   TextField,
-} from "@/@cms/cms";
+} from "@/@cms";
 import Text from "@/@cms/fields/text/text";
 import List from "@/@cms/fields/list/list";
 import RichText from "@/@cms/fields/rich-text/rich-text";

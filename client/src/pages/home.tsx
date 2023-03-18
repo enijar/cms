@@ -1,5 +1,5 @@
 import React from "react";
-import { createSchema, fields, serializeSchema } from "@/@cms/cms";
+import { createSchema, fields, serializeSchema } from "@/@cms";
 import Fields from "@/@cms/fields/fields";
 
 const schema = createSchema({
