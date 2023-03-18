@@ -23,7 +23,7 @@ export default function RichText({ schemaField, onChange }: Props) {
 
   return (
     <RichTextWrapper>
-      <label>{field.label}</label>
+      <label>{field.label.formatted}</label>
       <Editor
         defaultEditorState={editorState}
         onEditorStateChange={(editorState) => {

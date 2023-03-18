@@ -4,7 +4,7 @@ export const FieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25em;
-  margin-block: 1em;
+  padding-block: 0.5em;
 
   fieldset {
     border-style: dashed;

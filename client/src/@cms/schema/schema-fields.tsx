@@ -18,13 +18,62 @@ function schemaToSchemaFields(schema: Schema): SchemaField[] {
   return schemaFields;
 }
 
+type Field = {
+  type: SchemaField["type"];
+  value: SchemaField["value"];
+  items?: Array<{
+    type: SchemaField["type"];
+    value: SchemaField["value"];
+  }>;
+};
+
+type Fields = {
+  [name: string]: Field | Field[];
+};
+
+function createFields(schema: Schema): Fields {
+  const fields: Fields = {};
+  for (const name in schema) {
+    if (!schema.hasOwnProperty(name)) continue;
+    const field = schema[name];
+
+    if (field.schema !== undefined) {
+      fields[name] = {
+        type: field.type,
+        value: field.value,
+        items: [
+          // {
+          //   type: field.schema!.type,
+          //   value: field.schema!.value,
+          // },
+        ],
+      };
+      continue;
+    }
+
+    fields[name] = {
+      type: field.type,
+      value: field.value,
+    };
+  }
+  return fields;
+}
+
 export default function SchemaFields({ schema }: Props) {
+  const fields = React.useMemo(() => {
+    return createFields(schema);
+  }, [schema]);
+
+  React.useEffect(() => {
+    console.log(fields);
+  }, [fields]);
+
   const schemaFields = React.useMemo(() => {
     return schemaToSchemaFields(schema);
   }, [schema]);
 
   const handleChange = React.useCallback(() => {
-    console.log("change");
+    // console.log("change");
   }, []);
 
   return (

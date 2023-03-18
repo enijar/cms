@@ -10,6 +10,7 @@ export type SchemaField = {
   value: string;
   options?: Partial<SchemaFieldOptions>;
   schema?: Schema;
+  items?: SchemaField[];
 };
 
 export type Schema = {

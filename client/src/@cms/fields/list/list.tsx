@@ -14,16 +14,16 @@ export default function List({ schemaField, onChange }: Props) {
   const field = useField(schemaField, onChange);
 
   const add = React.useCallback(() => {
-    console.log("todo: add");
+    console.log("todo: add", schemaField);
   }, []);
 
   return (
     <ListWrapper>
-      <Accordion title={field.label}>
+      <Accordion title={field.label.plural}>
         {schemaField.schema !== undefined && (
           <SchemaFields schema={schemaField.schema!} />
         )}
-        <button onClick={add}>New Item</button>
+        <button onClick={add}>Add {field.label.singular}</button>
       </Accordion>
     </ListWrapper>
   );

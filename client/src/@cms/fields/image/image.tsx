@@ -13,7 +13,7 @@ export default function Image({ schemaField, onChange }: Props) {
 
   return (
     <ImageWrapper>
-      <label htmlFor={field.id}>{field.label}</label>
+      <label htmlFor={field.id}>{field.label.formatted}</label>
       <input
         type="file"
         id={field.id}

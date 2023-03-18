@@ -33,6 +33,7 @@ export function createSchema(fn: (fields: SchemaFields) => Schema): any {
         name: "",
         options,
         schema,
+        items: [],
       };
     },
   };

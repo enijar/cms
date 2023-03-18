@@ -13,7 +13,7 @@ export default function Text({ schemaField, onChange }: Props) {
 
   return (
     <TextWrapper>
-      <label htmlFor={field.id}>{field.label}</label>
+      <label htmlFor={field.id}>{field.label.formatted}</label>
       <input
         id={field.id}
         value={field.value}
