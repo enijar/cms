@@ -3,9 +3,11 @@ import { createSchema, fields, serializeSchema } from "@/@cms";
 import Fields from "@/@cms/fields/fields";
 
 const schema = createSchema({
-  people: fields.list({
-    name: fields.text(),
-    bio: fields.richText(),
+  title: fields.text(),
+  description: fields.richText(),
+  locations: fields.list({
+    address: fields.text(),
+    info: fields.richText(),
   }),
 });
 

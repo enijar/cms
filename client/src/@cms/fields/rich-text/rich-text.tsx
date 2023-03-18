@@ -5,6 +5,7 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import { RichTextWrapper } from "@/@cms/fields/rich-text/rich-text.styles";
 import { RichTextField } from "@/@cms";
+import Label from "@/@cms/components/label/label";
 
 type Props = {
   field: RichTextField;
@@ -21,7 +22,7 @@ export default function RichText({ field }: Props) {
 
   return (
     <RichTextWrapper>
-      <label>{field.name}</label>
+      <Label text={field.name} />
       <Editor
         defaultEditorState={editorState}
         onEditorStateChange={(editorState) => {

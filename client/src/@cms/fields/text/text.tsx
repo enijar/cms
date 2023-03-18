@@ -1,6 +1,7 @@
 import React from "react";
 import { TextWrapper } from "@/@cms/fields/text/text.styles";
 import { TextField } from "@/@cms";
+import Label from "@/@cms/components/label/label";
 
 type Props = {
   field: TextField;
@@ -11,7 +12,7 @@ export default function Text({ field }: Props) {
 
   return (
     <TextWrapper>
-      <label>{field.name}</label>
+      <Label text={field.name} />
       <input
         value={value}
         name={field.name}

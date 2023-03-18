@@ -1,4 +1,5 @@
 import React from "react";
+import pluralize from "pluralize";
 import { ListWrapper } from "@/@cms/fields/list/list.styles";
 import Accordion from "@/components/accordion/accordion";
 import Fields from "@/@cms/fields/fields";
@@ -15,7 +16,7 @@ export default function List({ field }: Props) {
 
   return (
     <ListWrapper>
-      <Accordion title={field.name}>
+      <Accordion title={pluralize(field.name, 0)}>
         {value.map((fields, index) => {
           return <Fields key={index} schema={fields} />;
         })}
@@ -25,7 +26,7 @@ export default function List({ field }: Props) {
             setValue([...field.value]);
           }}
         >
-          Add {field.name}
+          Add {pluralize(field.name, 1)}
         </button>
       </Accordion>
     </ListWrapper>

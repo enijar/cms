@@ -5,9 +5,10 @@ import {
   AccordionInner,
   AccordionWrapper,
 } from "@/components/accordion/accordion-styles";
+import Label from "@/@cms/components/label/label";
 
 type Props = {
-  title: React.ReactNode;
+  title: string;
   children?: React.ReactNode;
 };
 
@@ -41,7 +42,9 @@ export default function Accordion({ title, children }: Props) {
 
   return (
     <AccordionWrapper>
-      <AccordionHeader onClick={toggle}>{title}</AccordionHeader>
+      <AccordionHeader onClick={toggle}>
+        <Label text={title} />
+      </AccordionHeader>
       <AccordionBody ref={bodyRef}>
         <AccordionInner>{children}</AccordionInner>
       </AccordionBody>
