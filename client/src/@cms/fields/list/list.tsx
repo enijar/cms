@@ -5,6 +5,8 @@ import Accordion from "@/@cms/components/accordion/accordion";
 import Fields from "@/@cms/components/fields/fields";
 import { ListField } from "@/@cms";
 import Button from "@/@cms/components/button/button";
+import Label from "@/@cms/components/label/label";
+import { capitalCase } from "change-case";
 
 type Props = {
   field: ListField;
@@ -17,10 +19,17 @@ export default function List({ field }: Props) {
 
   return (
     <ListWrapper>
-      <Accordion title={pluralize(field.name, 0)}>
-        {value.map((fields, index) => {
-          return <Fields key={index} schema={fields} />;
-        })}
+      <Label text={pluralize(field.name, 0)} />
+      {value.map((fields, index) => {
+        const n = index + 1;
+        const title = `${n}. Edit ${capitalCase(pluralize(field.name, 1))}`;
+        return (
+          <Accordion key={index} title={title}>
+            <Fields key={index} schema={fields} />
+          </Accordion>
+        );
+      })}
+      <div>
         <Button
           onClick={() => {
             field.add();
@@ -29,7 +38,7 @@ export default function List({ field }: Props) {
         >
           Add {pluralize(field.name, 1)}
         </Button>
-      </Accordion>
+      </div>
     </ListWrapper>
   );
 }
