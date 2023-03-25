@@ -2,7 +2,7 @@ import React from "react";
 import pluralize from "pluralize";
 import { capitalCase } from "change-case";
 import { ListWrapper } from "@/@cms/fields/list/list.styles";
-import Accordion from "@/@cms/components/accordion/accordion";
+import Accordion, { AccordionApi } from "@/@cms/components/accordion/accordion";
 import Fields from "@/@cms/components/fields/fields";
 import { ListField } from "@/@cms";
 import Button from "@/@cms/components/button/button";
@@ -17,35 +17,28 @@ export default function List({ field }: Props) {
     ...field.value,
   ]);
 
-  const [openIndex, setOpenIndex] = React.useState(-1);
+  const accordionRef = React.useRef<AccordionApi | null>(null);
 
   return (
     <ListWrapper>
       <Label text={pluralize(field.name, 0)} />
-      {value.map((fields, index) => {
-        const n = index + 1;
-        const title = `${n}. Edit ${capitalCase(pluralize(field.name, 1))}`;
-        return (
-          <Accordion
-            key={index}
-            title={title}
-            open={openIndex === index}
-            onOpenChange={(open) => {
-              if (!open) return;
-              setOpenIndex(index);
-            }}
-          >
-            <Fields key={index} schema={fields} />
-          </Accordion>
-        );
-      })}
+      <Accordion
+        ref={accordionRef}
+        items={value.map((fields, index) => {
+          const n = index + 1;
+          return {
+            title: `${n}. Edit ${capitalCase(pluralize(field.name, 1))}`,
+            children: <Fields key={index} schema={fields} />,
+          };
+        })}
+      />
       <div>
         <Button
           onClick={() => {
             field.add();
             const value = [...field.value];
             setValue(value);
-            setOpenIndex(value.length - 1);
+            accordionRef.current?.open(value.length - 1);
           }}
         >
           Add {pluralize(field.name, 1)}

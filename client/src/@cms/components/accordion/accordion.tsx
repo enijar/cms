@@ -1,67 +1,48 @@
 import React from "react";
-import {
-  AccordionBody,
-  AccordionHeader,
-  AccordionInner,
-  AccordionWrapper,
-} from "@/@cms/components/accordion/accordion-styles";
+import { AccordionWrapper } from "@/@cms/components/accordion/accordion-styles";
+import AccordionItem from "@/@cms/components/accordion/accordion-item";
 
 type Props = {
-  title: string;
-  children?: React.ReactNode;
-  open?: boolean;
-  onOpenChange: (open: Props["open"]) => void;
+  items: Array<{
+    title: string;
+    children?: React.ReactNode;
+  }>;
 };
 
-export default function Accordion({
-  title,
-  children,
-  open = false,
-  onOpenChange,
-}: Props) {
-  const bodyRef = React.useRef<HTMLDivElement | null>(null);
+export type AccordionApi = {
+  open: (index: number) => void;
+};
 
-  const [isOpen, setIsOpen] = React.useState(open);
+function Accordion(
+  { items }: Props,
+  ref: React.ForwardedRef<AccordionApi | null>
+) {
+  const [openIndex, setOpenIndex] = React.useState(-1);
 
-  React.useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
-
-  const onOpenChangeRef = React.useRef(onOpenChange);
-
-  React.useEffect(() => {
-    onOpenChangeRef.current(isOpen);
-  }, [isOpen]);
-
-  React.useLayoutEffect(() => {
-    const body = bodyRef.current;
-    if (body === null) return;
-    body.style.setProperty("--open", `${open ? 1 : 0}`);
-  }, [open]);
-
-  React.useEffect(() => {
-    const body = bodyRef.current;
-    if (body === null) return;
-    let nextFrame: number;
-    (function tick() {
-      nextFrame = requestAnimationFrame(tick);
-      body.style.setProperty("--scroll-height", `${body.scrollHeight}px`);
-    })();
-    return () => {
-      cancelAnimationFrame(nextFrame);
+  React.useImperativeHandle(ref, () => {
+    return {
+      open(index) {
+        setOpenIndex(index);
+      },
     };
-  }, []);
-
-  const toggle = React.useCallback(() => {
-    setIsOpen((isOpen) => !isOpen);
-  }, []);
+  });
 
   return (
     <AccordionWrapper>
-      <AccordionHeader onClick={toggle}>{title}</AccordionHeader>
-      <AccordionBody ref={bodyRef}>
-        <AccordionInner>{children}</AccordionInner>
-      </AccordionBody>
+      {items.map((item, index) => {
+        return (
+          <AccordionItem
+            key={index}
+            open={index === openIndex}
+            onOpen={() => setOpenIndex(index)}
+            onClose={() => setOpenIndex(-1)}
+            title={item.title}
+            children={item.children}
+          />
+        );
+      })}
     </AccordionWrapper>
   );
 }
+
+export default React.forwardRef(Accordion);
