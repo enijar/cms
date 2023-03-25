@@ -9,14 +9,31 @@ import {
 type Props = {
   title: string;
   children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange: (open: Props["open"]) => void;
 };
 
-export default function Accordion({ title, children }: Props) {
+export default function Accordion({
+  title,
+  children,
+  open = false,
+  onOpenChange,
+}: Props) {
   const bodyRef = React.useRef<HTMLDivElement | null>(null);
 
-  const [open, setOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(open);
 
   React.useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
+  const onOpenChangeRef = React.useRef(onOpenChange);
+
+  React.useEffect(() => {
+    onOpenChangeRef.current(isOpen);
+  }, [isOpen]);
+
+  React.useLayoutEffect(() => {
     const body = bodyRef.current;
     if (body === null) return;
     body.style.setProperty("--open", `${open ? 1 : 0}`);
@@ -36,7 +53,7 @@ export default function Accordion({ title, children }: Props) {
   }, []);
 
   const toggle = React.useCallback(() => {
-    setOpen((open) => !open);
+    setIsOpen((isOpen) => !isOpen);
   }, []);
 
   return (
