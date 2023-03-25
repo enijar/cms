@@ -1,5 +1,10 @@
 import React from "react";
-import { createSchema, fields, serializeSchema } from "@/@cms";
+import {
+  createSchema,
+  deserializeSchema,
+  fields,
+  serializeSchema,
+} from "@/@cms";
 import Schema from "@/@cms/components/schema/schema";
 
 const schema = createSchema({
@@ -18,7 +23,8 @@ export default function Home() {
       <Schema
         schema={schema}
         onSubmit={(schema) => {
-          console.log(serializeSchema(schema));
+          const serialized = serializeSchema(schema);
+          console.log(deserializeSchema(serialized));
         }}
       />
     </main>

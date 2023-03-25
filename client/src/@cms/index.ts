@@ -94,3 +94,27 @@ export function schemaToFields(schema: Schema): AllFields[] {
 export function serializeSchema(schema: Schema): string {
   return JSON.stringify(schema);
 }
+
+export function deserializeSchema(schema: string): Schema {
+  const result: Schema = {};
+  const data = JSON.parse(schema) as Fields;
+  for (const name in data) {
+    const field = data[name];
+    switch (field.type) {
+      case "text":
+        result[name] = fields.text();
+        break;
+      case "richText":
+        result[name] = fields.richText();
+        break;
+      case "list":
+        const list = deserializeSchema(
+          JSON.stringify((data[name] as ListField).fields)
+        );
+        result[name] = fields.list(list);
+        result[name].value = field.value;
+        break;
+    }
+  }
+  return result;
+}
