@@ -1,6 +1,7 @@
 import * as path from "path";
 import { Dialect } from "sequelize";
 import User from "./models/user";
+import Schema from "./models/schema";
 
 const config = {
   port: parseInt(process.env.PORT ?? "3000"),
@@ -13,7 +14,7 @@ const config = {
     dialect: (process.env.DATABASE_DIALECT ?? "sqlite") as Dialect,
     username: process.env.DATABASE_USERNAME ?? "app",
     password: process.env.DATABASE_PASSWORD ?? "secret",
-    models: [User],
+    models: [User, Schema],
   },
   jwt: {
     secret: process.env.JWT_SECRET ?? "secret",

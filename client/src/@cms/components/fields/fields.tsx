@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  ListField,
-  RichTextField,
-  Schema,
-  schemaToFields,
-  TextField,
-} from "@/@cms";
+import { ListField, RichTextField, TextField } from "@/../../shared/types";
+import { Schema, schemaToFields } from "@/@cms";
 import Text from "@/@cms/fields/text/text";
 import List from "@/@cms/fields/list/list";
 import RichText from "@/@cms/fields/rich-text/rich-text";

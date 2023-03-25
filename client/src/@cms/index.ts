@@ -1,26 +1,5 @@
 import { cloneDeep } from "lodash";
-
-export type Field = {
-  type: "text" | "richText" | "list";
-  name: string;
-};
-
-export type TextField = Field & {
-  value: string;
-  setValue: (value: TextField["value"]) => void;
-};
-
-export type RichTextField = Field & {
-  value: string;
-  setValue: (value: RichTextField["value"]) => void;
-};
-
-export type ListField = Field & {
-  fields: Fields;
-  value: Fields[];
-  setValue: (value: ListField["value"]) => void;
-  add: () => void;
-};
+import { ListField, RichTextField, TextField } from "@/../../shared/types";
 
 export type AllFields = TextField | RichTextField | ListField;
 
