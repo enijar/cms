@@ -22,7 +22,7 @@ export type ListField = Field & {
   add: () => void;
 };
 
-export type AllFields = TextField | ListField;
+export type AllFields = TextField | RichTextField | ListField;
 
 export type Fields = {
   [name: string]: AllFields;
