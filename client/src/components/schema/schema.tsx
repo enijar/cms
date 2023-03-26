@@ -1,8 +1,8 @@
 import React from "react";
-import { Schema as SchemaType } from "@/@cms";
-import { SchemaWrapper } from "@/@cms/components/schema/schema.styles";
-import Fields from "@/@cms/components/fields/fields";
-import Button from "@/@cms/components/button/button";
+import { Schema as SchemaType } from "@/types";
+import { SchemaWrapper } from "@/components/schema/schema.styles";
+import Fields from "@/components/fields/fields";
+import Button from "@/components/button/button";
 
 type Props = {
   schema: SchemaType;

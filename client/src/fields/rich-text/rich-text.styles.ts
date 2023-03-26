@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FieldWrapper } from "@/@cms/fields/field.styles";
+import { FieldWrapper } from "@/fields/field.styles";
 
 export const RichTextWrapper = styled(FieldWrapper)`
   .rdw-option-wrapper {

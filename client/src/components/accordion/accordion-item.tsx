@@ -4,7 +4,7 @@ import {
   AccordionItemHeader,
   AccordionItemInner,
   AccordionItemWrapper,
-} from "@/@cms/components/accordion/accordion-styles";
+} from "@/components/accordion/accordion-styles";
 
 type Props = {
   open: boolean;

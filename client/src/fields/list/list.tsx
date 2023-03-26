@@ -2,11 +2,11 @@ import React from "react";
 import pluralize from "pluralize";
 import { capitalCase } from "change-case";
 import { ListField } from "@/../../shared/types";
-import { ListWrapper } from "@/@cms/fields/list/list.styles";
-import Accordion, { AccordionApi } from "@/@cms/components/accordion/accordion";
-import Fields from "@/@cms/components/fields/fields";
-import Button from "@/@cms/components/button/button";
-import Label from "@/@cms/components/label/label";
+import { ListWrapper } from "@/fields/list/list.styles";
+import Accordion, { AccordionApi } from "@/components/accordion/accordion";
+import Fields from "@/components/fields/fields";
+import Button from "@/components/button/button";
+import Label from "@/components/label/label";
 
 type Props = {
   field: ListField;

@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField } from "@/../../shared/types";
-import { TextWrapper } from "@/@cms/fields/text/text.styles";
-import Label from "@/@cms/components/label/label";
+import { TextWrapper } from "@/fields/text/text.styles";
+import Label from "@/components/label/label";
 
 type Props = {
   field: TextField;

@@ -1,6 +1,6 @@
 import React from "react";
-import { AccordionWrapper } from "@/@cms/components/accordion/accordion-styles";
-import AccordionItem from "@/@cms/components/accordion/accordion-item";
+import { AccordionWrapper } from "@/components/accordion/accordion-styles";
+import AccordionItem from "@/components/accordion/accordion-item";
 
 type Props = {
   items: Array<{

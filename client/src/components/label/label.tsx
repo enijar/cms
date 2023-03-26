@@ -1,6 +1,6 @@
 import React from "react";
 import { capitalCase } from "change-case";
-import { LabelWrapper } from "@/@cms/components/label/label.styles";
+import { LabelWrapper } from "@/components/label/label.styles";
 
 type Props = {
   text: string;

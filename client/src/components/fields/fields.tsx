@@ -1,10 +1,11 @@
 import React from "react";
 import { ListField, RichTextField, TextField } from "@/../../shared/types";
-import { Schema, schemaToFields } from "@/@cms";
-import Text from "@/@cms/fields/text/text";
-import List from "@/@cms/fields/list/list";
-import RichText from "@/@cms/fields/rich-text/rich-text";
-import { FieldsWrapper } from "@/@cms/components/fields/fields.styles";
+import { Schema } from "@/types";
+import { schemaToFields } from "@/cms";
+import Text from "@/fields/text/text";
+import List from "@/fields/list/list";
+import RichText from "@/fields/rich-text/rich-text";
+import { FieldsWrapper } from "@/components/fields/fields.styles";
 
 type Props = {
   schema: Schema;

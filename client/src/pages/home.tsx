@@ -4,8 +4,8 @@ import {
   deserializeSchema,
   fields,
   serializeSchema,
-} from "@/@cms";
-import Schema from "@/@cms/components/schema/schema";
+} from "@/cms";
+import Schema from "@/components/schema/schema";
 
 const schema = createSchema({
   title: fields.text(),

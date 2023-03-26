@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonWrapper } from "@/@cms/components/button/button.syles";
+import { ButtonWrapper } from "@/components/button/button.syles";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
