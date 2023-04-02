@@ -1,5 +1,5 @@
 import React from "react";
-import { Schema as SchemaType } from "@/types";
+import { Schema as SchemaType } from "@/../../shared/types";
 import { SchemaWrapper } from "@/components/schema/schema.styles";
 import Fields from "@/components/fields/fields";
 import Button from "@/components/button/button";

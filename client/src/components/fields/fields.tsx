@@ -1,6 +1,6 @@
 import React from "react";
 import { ListField, RichTextField, TextField } from "@/../../shared/types";
-import { Schema } from "@/types";
+import { Schema } from "@/../../shared/types";
 import { schemaToFields } from "@/cms";
 import Text from "@/fields/text/text";
 import List from "@/fields/list/list";

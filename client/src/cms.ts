@@ -1,6 +1,13 @@
 import { cloneDeep } from "lodash";
-import { ListField, RichTextField, TextField } from "@/../../shared/types";
-import { AllFields, Fields, Schema } from "@/types";
+import {
+  AllFields,
+  Field,
+  Fields,
+  ListField,
+  RichTextField,
+  Schema,
+  TextField,
+} from "@/../../shared/types";
 
 export const fields = {
   text(): TextField {
@@ -90,4 +97,28 @@ export function deserializeSchema(schema: string): Schema {
     }
   }
   return result;
+}
+
+type Formatted = {
+  [name: string]: {
+    type: Field["type"];
+    value: AllFields["value"] | Formatted[];
+  };
+};
+
+export function format(schema: Schema): Formatted {
+  const formatted: Formatted = {};
+  for (const name in schema) {
+    formatted[name] = {
+      type: schema[name].type,
+      value: schema[name].value,
+    };
+    if (schema[name].type === "list") {
+      const field = schema[name] as ListField;
+      formatted[name].value = field.value.map((fields) => {
+        return format(fields);
+      });
+    }
+  }
+  return formatted;
 }
