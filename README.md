@@ -7,6 +7,10 @@ Schema based CMS. Define a schema and have it:
 1. Generate UI for users to update a schema
 2. Generate REST JSON API
 
+### Why?
+
+Sometimes all you need is a basic CMS that takes in a schema and handles the rest for you, e.g. saving data, creating an API, etc.
+
 ### Schema
 
 Here's how to define a schema and render it:
