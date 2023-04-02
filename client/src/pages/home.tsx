@@ -17,7 +17,7 @@ const schema = createSchema({
 
 export default function Home() {
   return (
-    <main>
+    <>
       <h1>Home</h1>
       <Schema
         schema={schema}
@@ -27,6 +27,6 @@ export default function Home() {
           console.log(format(schema));
         }}
       />
-    </main>
+    </>
   );
 }
