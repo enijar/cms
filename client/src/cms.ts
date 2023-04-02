@@ -110,11 +110,11 @@ export function deserializeSchema(schema: string): Schema {
           JSON.stringify((data[name] as GroupField).value)
         );
         result[name] = fields.group(group);
-        result[name].value = field.value;
+        result[name].value = group;
         break;
     }
   }
-  return result;
+  return createSchema(result);
 }
 
 type Formatted = {
