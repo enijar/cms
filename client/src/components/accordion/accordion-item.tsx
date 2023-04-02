@@ -10,6 +10,7 @@ type Props = {
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
+  onRemove: () => void;
   title: string;
   children?: React.ReactNode;
 };
@@ -18,6 +19,7 @@ export default function AccordionItem({
   open,
   onOpen,
   onClose,
+  onRemove,
   title,
   children,
 }: Props) {
@@ -45,7 +47,15 @@ export default function AccordionItem({
   return (
     <AccordionItemWrapper>
       <AccordionItemHeader onClick={open ? onClose : onOpen}>
-        {title}
+        <span>{title}</span>
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            onRemove();
+          }}
+        >
+          Remove
+        </button>
       </AccordionItemHeader>
       <AccordionItemBody ref={bodyRef}>
         <AccordionItemInner>{children}</AccordionItemInner>

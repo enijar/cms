@@ -19,6 +19,17 @@ export const AccordionItemHeader = styled.div`
   padding: 0.5em 1em;
   cursor: pointer;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    background-color: transparent;
+    border: none;
+    text-transform: uppercase;
+    font-size: 0.6em;
+    cursor: pointer;
+  }
 `;
 
 export const AccordionItemWrapper = styled.div`

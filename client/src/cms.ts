@@ -35,6 +35,9 @@ export const fields = {
       add() {
         this.value.push(createSchema(this.fields));
       },
+      remove(index) {
+        this.value = this.value.filter((_, i) => i !== index);
+      },
     };
   },
 };

@@ -24,6 +24,11 @@ export default function List({ field }: Props) {
       <Label text={pluralize(field.name, 0)} />
       <Accordion
         ref={accordionRef}
+        onRemove={(index) => {
+          field.remove(index);
+          const value = [...field.value];
+          setValue(value);
+        }}
         items={value.map((fields, index) => {
           const n = index + 1;
           return {

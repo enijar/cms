@@ -7,6 +7,7 @@ type Props = {
     title: string;
     children?: React.ReactNode;
   }>;
+  onRemove: (index: number) => void;
 };
 
 export type AccordionApi = {
@@ -14,7 +15,7 @@ export type AccordionApi = {
 };
 
 function Accordion(
-  { items }: Props,
+  { items, onRemove }: Props,
   ref: React.ForwardedRef<AccordionApi | null>
 ) {
   const [openIndex, setOpenIndex] = React.useState(-1);
@@ -36,6 +37,7 @@ function Accordion(
             open={index === openIndex}
             onOpen={() => setOpenIndex(index)}
             onClose={() => setOpenIndex(-1)}
+            onRemove={() => onRemove(index)}
             title={item.title}
             children={item.children}
           />

@@ -18,6 +18,7 @@ export type ListField = Field & {
   value: Fields[];
   setValue: (value: ListField["value"]) => void;
   add: () => void;
+  remove: (index: number) => void;
 };
 
 export type AllFields = TextField | RichTextField | ListField;
