@@ -1,15 +1,90 @@
-# Web Template
+# CMS
 
-Opinionated template for building modern and scalable web projects.
+> ⚠️ WIP: still under heavy development. This is currently only a proof of concept.
 
-### Install
+Schema based CMS. Define a schema and have it:
 
-```shell
-npx degit enijar/web-template project-name
-cd project-name
+1. Generate UI for users to update a schema
+2. Generate REST JSON API
+
+### Schema
+
+Here's how to define a schema and render it:
+
+```javascript
+import React from "react";
+import { createSchema, fields, format, serializeSchema } from "@/cms";
+import Schema from "@/components/schema/schema";
+
+const schema = createSchema({
+  title: fields.text(),
+  description: fields.richText(),
+  person: fields.group({
+    name: fields.text(),
+    bio: fields.richText(),
+  }),
+  locations: fields.list({
+    address: fields.text(),
+    info: fields.richText(),
+  }),
+});
+
+function App() {
+  return (
+    <Schema
+      schema={schema}
+      onSubmit={(schema) => {
+        // So something with the submitted schema:
+        const serialized = serializeSchema(schema);
+        console.log(serialized);
+        console.log(format(schema));
+      }}
+    />
+  );
+}
 ```
 
-### Getting Started
+### Fields
+
+**text**
+
+```javascript
+const schema = createSchema({
+  field: fields.text(),
+});
+```
+
+**richText**
+
+```javascript
+const schema = createSchema({
+  field: fields.richText(),
+});
+```
+
+**list**
+
+```javascript
+const schema = createSchema({
+  field: fields.list({
+    field: fields.text(),
+    // Other fields...
+  }),
+});
+```
+
+**group**
+
+```javascript
+const schema = createSchema({
+  field: fields.group({
+    field: fields.text(),
+    // Other fields...
+  }),
+});
+```
+
+### Contributing
 
 Set up `ENV_VARS`:
 
@@ -18,35 +93,9 @@ cp client/.env.example client/.env
 cp server/.env.example server/.env
 ```
 
-Start app in development mode:
+Start in development mode:
 
 ```shell
-nvm use # uses supported Node version for this project
 npm install
 npm start
-```
-
-### Production Build
-
-Set up `ENV_VARS`:
-
-```shell
-cp client/.env.example client/.env
-cp server/.env.example server/.env
-```
-
-Build app in production mode:
-
-```shell
-nvm use # uses supported Node version for this project
-npm install
-npm run build
-```
-
-Run app in production:
-
-```shell
-# Install PM2 globally to manage the server process
-npm add -g pm2
-pm2 start --name app server/build/index.js
 ```
