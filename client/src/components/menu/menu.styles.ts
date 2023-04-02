@@ -5,7 +5,7 @@ export const MenuItemWrapper = styled(Link)`
   text-decoration: none;
   display: block;
   background-color: #414141;
-  padding: 0.5em 1em;
+  padding: 0.5em;
   margin-block-end: 1px;
 
   &[data-active="true"] {

@@ -32,6 +32,15 @@ export type Fields = {
   [name: string]: AllFields;
 };
 
+export type SchemaData = {
+  [name: string]:
+    | SchemaData
+    | {
+        type: Field["type"];
+        value: AllFields["value"] | SchemaData[] | SchemaData;
+      };
+};
+
 export type Schema = {
   [name: string]: AllFields;
 };

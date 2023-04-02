@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Schemas() {
+export default function AuthLogin() {
   return (
     <>
-      <h1>Schemas</h1>
+      <h1>Login</h1>
     </>
   );
 }

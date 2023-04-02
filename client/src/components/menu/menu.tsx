@@ -10,7 +10,7 @@ export default function Menu({}: Props) {
   return (
     <MenuWrapper>
       <MenuItem to="/">Dashboard</MenuItem>
-      <MenuItem to="/schemas">Schemas</MenuItem>
+      <MenuItem to="/content">Content</MenuItem>
       <MenuItem to="/users">Users</MenuItem>
     </MenuWrapper>
   );

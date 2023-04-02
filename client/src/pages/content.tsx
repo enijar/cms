@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Login() {
+export default function Content() {
   return (
     <>
-      <h1>Login</h1>
+      <h1>Content</h1>
     </>
   );
 }

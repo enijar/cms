@@ -4,11 +4,12 @@ import { AppReset } from "@/components/app/app.styles";
 import Page from "@/components/page/page";
 
 const Dashboard = React.lazy(() => import("@/pages/dashboard"));
-const Schemas = React.lazy(() => import("@/pages/schemas"));
+const Content = React.lazy(() => import("@/pages/content"));
 const Users = React.lazy(() => import("@/pages/users"));
-const Login = React.lazy(() => import("@/pages/auth/login"));
-const ForgotPassword = React.lazy(() => import("@/pages/auth/forgot-password"));
-const Home = React.lazy(() => import("@/pages/home"));
+const AuthLogin = React.lazy(() => import("@/pages/auth/auth-login"));
+const AuthForgotPassword = React.lazy(
+  () => import("@/pages/auth/auth-forgot-password")
+);
 
 export default function App() {
   return (
@@ -18,11 +19,13 @@ export default function App() {
         <React.Suspense fallback="Loading...">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/schemas" element={<Schemas />} />
+            <Route path="/content" element={<Content />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/auth/login" element={<AuthLogin />} />
+            <Route
+              path="/auth/forgot-password"
+              element={<AuthForgotPassword />}
+            />
           </Routes>
         </React.Suspense>
       </Page>

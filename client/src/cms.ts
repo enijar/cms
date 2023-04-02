@@ -1,12 +1,12 @@
 import { cloneDeep } from "lodash";
 import {
   AllFields,
-  Field,
   Fields,
   GroupField,
   ListField,
   RichTextField,
   Schema,
+  SchemaData,
   TextField,
 } from "@/../../shared/types";
 
@@ -117,17 +117,8 @@ export function deserializeSchema(schema: string): Schema {
   return createSchema(result);
 }
 
-type Formatted = {
-  [name: string]:
-    | Formatted
-    | {
-        type: Field["type"];
-        value: AllFields["value"] | Formatted[] | Formatted;
-      };
-};
-
-export function format(schema: Schema): Formatted {
-  const formatted: Formatted = {};
+export function format(schema: Schema): SchemaData {
+  const formatted: SchemaData = {};
   for (const name in schema) {
     formatted[name] = {
       type: schema[name].type,
@@ -145,4 +136,24 @@ export function format(schema: Schema): Formatted {
     }
   }
   return formatted;
+}
+
+export function hydrateSchema(schema: Schema, data: SchemaData): Schema {
+  for (const name in schema) {
+    if (data[name].type !== schema[name].type || !data.hasOwnProperty(name)) {
+      continue;
+    }
+    switch (schema[name].type) {
+      case "list": {
+        break;
+      }
+      case "group": {
+        break;
+      }
+      default: {
+        schema[name].setValue(data[name].value as any);
+      }
+    }
+  }
+  return schema;
 }
