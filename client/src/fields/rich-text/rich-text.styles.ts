@@ -575,6 +575,7 @@ export const RichTextWrapper = styled(FieldWrapper)`
 
   .rdw-emoji-modal {
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     position: absolute;
     top: 35px;
     left: 5px;
@@ -909,6 +910,7 @@ export const RichTextWrapper = styled(FieldWrapper)`
     min-width: 100px;
     max-height: 150px;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     background: white;
     z-index: 100;
   }
@@ -981,6 +983,7 @@ export const RichTextWrapper = styled(FieldWrapper)`
   .rdw-editor-main {
     height: 100%;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
   }
 

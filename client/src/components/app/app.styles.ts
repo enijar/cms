@@ -25,10 +25,10 @@ export const AppReset = createGlobalStyle`
 
   html,
   body,
-  #root,
-  main {
+  #root {
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   html {
@@ -39,10 +39,5 @@ export const AppReset = createGlobalStyle`
     text-rendering: geometricPrecision;
     background-color: #1e1e1e;
     color: #fefefe;
-  }
-
-  main {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
   }
 `;
