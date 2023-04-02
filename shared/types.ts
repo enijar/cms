@@ -1,5 +1,5 @@
 export type Field = {
-  type: "text" | "richText" | "list";
+  type: "text" | "richText" | "list" | "group";
   name: string;
 };
 
@@ -21,7 +21,12 @@ export type ListField = Field & {
   remove: (index: number) => void;
 };
 
-export type AllFields = TextField | RichTextField | ListField;
+export type GroupField = Field & {
+  value: Fields;
+  setValue: (value: GroupField["value"]) => void;
+};
+
+export type AllFields = TextField | RichTextField | ListField | GroupField;
 
 export type Fields = {
   [name: string]: AllFields;

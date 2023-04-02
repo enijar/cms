@@ -5,12 +5,13 @@ import Schema from "@/components/schema/schema";
 const schema = createSchema({
   title: fields.text(),
   description: fields.richText(),
+  person: fields.group({
+    name: fields.text(),
+    bio: fields.richText(),
+  }),
   locations: fields.list({
     address: fields.text(),
     info: fields.richText(),
-    items: fields.list({
-      name: fields.text(),
-    }),
   }),
 });
 

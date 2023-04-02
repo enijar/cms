@@ -3,6 +3,7 @@ import {
   AllFields,
   Field,
   Fields,
+  GroupField,
   ListField,
   RichTextField,
   Schema,
@@ -44,6 +45,16 @@ export const fields = {
       },
       remove(index) {
         this.value = this.value.filter((_, i) => i !== index);
+      },
+    };
+  },
+  group(fields: Fields): GroupField {
+    return {
+      type: "group",
+      name: "group",
+      value: fields,
+      setValue(value) {
+        this.value = value;
       },
     };
   },
@@ -94,16 +105,25 @@ export function deserializeSchema(schema: string): Schema {
         result[name] = fields.list(list);
         result[name].value = field.value;
         break;
+      case "group":
+        const group = deserializeSchema(
+          JSON.stringify((data[name] as GroupField).value)
+        );
+        result[name] = fields.group(group);
+        result[name].value = field.value;
+        break;
     }
   }
   return result;
 }
 
 type Formatted = {
-  [name: string]: {
-    type: Field["type"];
-    value: AllFields["value"] | Formatted[];
-  };
+  [name: string]:
+    | Formatted
+    | {
+        type: Field["type"];
+        value: AllFields["value"] | Formatted[] | Formatted;
+      };
 };
 
 export function format(schema: Schema): Formatted {
@@ -118,6 +138,10 @@ export function format(schema: Schema): Formatted {
       formatted[name].value = field.value.map((fields) => {
         return format(fields);
       });
+    }
+    if (schema[name].type === "group") {
+      const field = schema[name] as GroupField;
+      formatted[name] = format(field.value);
     }
   }
   return formatted;
