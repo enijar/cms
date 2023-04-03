@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, filter } from "lodash";
 import {
   AllFields,
   Fields,
@@ -92,32 +92,42 @@ export function deserializeSchema(schema: string): Schema {
   for (const name in data) {
     const field = data[name];
     switch (field.type) {
-      case "text":
-        result[name] = fields.text();
+      case "text": {
+        const f = fields.text();
+        f.setValue(field.value as string);
+        result[name] = f;
         break;
-      case "richText":
-        result[name] = fields.richText();
+      }
+      case "richText": {
+        const f = fields.richText();
+        f.setValue(field.value as string);
+        result[name] = f;
         break;
-      case "list":
+      }
+      case "list": {
         const list = deserializeSchema(
           JSON.stringify((data[name] as ListField).fields)
         );
-        result[name] = fields.list(list);
-        result[name].value = field.value;
+        const f = fields.list(list);
+        f.setValue(field.value as Fields[]);
+        result[name] = f;
         break;
-      case "group":
+      }
+      case "group": {
         const group = deserializeSchema(
           JSON.stringify((data[name] as GroupField).value)
         );
-        result[name] = fields.group(group);
-        result[name].value = group;
+        const f = fields.group(group);
+        f.setValue(group);
+        result[name] = f;
         break;
+      }
     }
   }
   return createSchema(result);
 }
 
-export function format(schema: Schema): SchemaData {
+export function schemaData(schema: Schema): SchemaData {
   const formatted: SchemaData = {};
   for (const name in schema) {
     formatted[name] = {
@@ -127,31 +137,53 @@ export function format(schema: Schema): SchemaData {
     if (schema[name].type === "list") {
       const field = schema[name] as ListField;
       formatted[name].value = field.value.map((fields) => {
-        return format(fields);
+        return schemaData(fields);
       });
     }
     if (schema[name].type === "group") {
       const field = schema[name] as GroupField;
-      formatted[name] = format(field.value);
+      formatted[name] = schemaData(field.value);
     }
   }
   return formatted;
 }
 
-export function hydrateSchema(schema: Schema, data: SchemaData): Schema {
+export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
+  if (data === undefined) {
+    return schema;
+  }
   for (const name in schema) {
-    if (data[name].type !== schema[name].type || !data.hasOwnProperty(name)) {
-      continue;
-    }
-    switch (schema[name].type) {
+    const field = schema[name];
+    switch (field.type) {
+      case "text": {
+        const f = schema[name] as TextField;
+        f.setValue(data[name].value as string);
+        break;
+      }
+      case "richText": {
+        const f = schema[name] as RichTextField;
+        f.setValue(data[name].value as string);
+        break;
+      }
       case "list": {
+        const f = schema[name] as ListField;
+        f.setValue(
+          (data[name].value as SchemaData[]).map((data) => {
+            return hydrateSchema(f.fields, data);
+          })
+        );
         break;
       }
       case "group": {
+        const f = schema[name] as ListField;
+        const s = hydrateSchema(f.fields, data[name].value as SchemaData);
+        const value: SchemaData = {};
+        for (const name in s) {
+          value[name] = s[name];
+        }
+        console.log(value);
+        // f.setValue(value);
         break;
-      }
-      default: {
-        schema[name].setValue(data[name].value as any);
       }
     }
   }
