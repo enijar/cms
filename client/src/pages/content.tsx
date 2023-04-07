@@ -1,13 +1,17 @@
 import React from "react";
+import { home } from "@/../../config/schemas";
 import Schema from "@/components/schema/schema";
 import { deserializeSchema, schemaData } from "@/cms";
-import { home } from "@/../../config/schemas";
+import useSaveData from "@/hooks/use-save-data";
 
 export default function Content() {
+  const saveData = useSaveData("home");
+
   return (
     <>
       <h1>Content</h1>
       <Schema
+        disabled={saveData.saving}
         schema={home}
         data={schemaData(
           deserializeSchema(
@@ -15,7 +19,8 @@ export default function Content() {
           )
         )}
         onSubmit={(schema) => {
-          console.log(schemaData(schema));
+          if (saveData.saving) return;
+          saveData.save(schemaData(schema));
         }}
       />
     </>

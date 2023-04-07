@@ -1,17 +1,23 @@
 import React from "react";
 import { Schema as SchemaType, SchemaData } from "@/../../shared/types";
 import { SchemaWrapper } from "@/components/schema/schema.styles";
+import { hydrateSchema } from "@/cms";
 import Fields from "@/components/fields/fields";
 import Button from "@/components/button/button";
-import { hydrateSchema } from "@/cms";
 
 type Props = {
   schema: SchemaType;
-  data?: SchemaData;
   onSubmit: (schema: SchemaType) => void;
+  data?: SchemaData;
+  disabled?: boolean;
 };
 
-export default function Schema({ schema, data, onSubmit }: Props) {
+export default function Schema({
+  schema,
+  onSubmit,
+  data,
+  disabled = false,
+}: Props) {
   const hydratedSchema = React.useMemo(() => {
     return hydrateSchema(schema, data);
   }, [schema, data]);
@@ -19,7 +25,9 @@ export default function Schema({ schema, data, onSubmit }: Props) {
   return (
     <SchemaWrapper>
       <Fields schema={hydratedSchema} />
-      <Button onClick={() => onSubmit(schema)}>Submit</Button>
+      <Button onClick={() => onSubmit(schema)} disabled={disabled}>
+        Submit
+      </Button>
     </SchemaWrapper>
   );
 }

@@ -1,13 +1,9 @@
 import * as express from "express";
 import { json } from "body-parser";
 import * as cors from "cors";
-import * as trpc from "@trpc/server";
-import * as trpcExpress from "@trpc/server/adapters/express";
 import config from "../config";
 import cookies from "../middleware/cookies";
-import router from "../router";
-import auth from "./auth";
-import User from "../models/user";
+import content from "../actions/content";
 
 const app = express();
 
@@ -25,26 +21,6 @@ app.use(
 );
 app.use(cookies);
 
-export const createContext = async ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions) => {
-  const data = await auth.verify(req.cookies.get("authToken"));
-  let user: User | null = null;
-  if (data !== null) {
-    user = await User.findByPk(data.id);
-  }
-  return { req, res, user };
-};
-
-export type AppContext = trpc.inferAsyncReturnType<typeof createContext>;
-
-app.use(
-  "/trpc",
-  trpcExpress.createExpressMiddleware({
-    router,
-    createContext,
-  })
-);
+app.post("/api/content", content);
 
 export default app;

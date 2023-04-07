@@ -7,4 +7,9 @@ export const ButtonWrapper = styled.button`
   color: #000000;
   padding: 0.25em 0.5em;
   cursor: pointer;
+
+  &[disabled] {
+    background-color: #999999;
+    cursor: not-allowed;
+  }
 `;
