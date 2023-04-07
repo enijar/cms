@@ -22,6 +22,8 @@ export default function Fields({ schema }: Props) {
     return schemaToFields(schema);
   }, [schema]);
 
+  // console.log(fields.find((f) => f.type === "list"));
+
   return (
     <FieldsWrapper>
       {fields.map((field, index) => {

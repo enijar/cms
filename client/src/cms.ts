@@ -69,6 +69,10 @@ export function createSchema(fields: Fields): Schema {
       const listField = field as ListField;
       listField.value = [createSchema(listField.fields)];
     }
+    if (field.type === "group") {
+      const groupField = field as GroupField;
+      groupField.value = createSchema(groupField.value);
+    }
     schema[name] = field;
   }
   return schema;
@@ -154,6 +158,9 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
     return schema;
   }
   for (const name in schema) {
+    if (!data.hasOwnProperty(name)) {
+      continue;
+    }
     const field = schema[name];
     switch (field.type) {
       case "text": {

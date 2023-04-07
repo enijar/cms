@@ -6,6 +6,17 @@ export const home = createSchema({
   person: fields.group({
     name: fields.text(),
     bio: fields.richText(),
+    partner: fields.group({
+      name: fields.text(),
+      bio: fields.richText(),
+      friends: fields.list({
+        name: fields.text(),
+        info: fields.group({
+          dob: fields.text(),
+          height: fields.text(),
+        }),
+      }),
+    }),
   }),
   locations: fields.list({
     address: fields.text(),
