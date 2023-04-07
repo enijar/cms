@@ -61,6 +61,7 @@ export const fields = {
 };
 
 export function createSchema(fields: Fields): Schema {
+  fields = cloneDeep(fields);
   const schema: Schema = {};
   for (const name in fields) {
     const field = cloneDeep(fields[name]);
