@@ -18,7 +18,7 @@ export default function Schema({ schema, data, onSubmit }: Props) {
 
   return (
     <SchemaWrapper>
-      <Fields schema={schema} />
+      <Fields schema={hydratedSchema} />
       <Button onClick={() => onSubmit(schema)}>Submit</Button>
     </SchemaWrapper>
   );

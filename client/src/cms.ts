@@ -1,4 +1,4 @@
-import { cloneDeep, filter } from "lodash";
+import { cloneDeep } from "lodash";
 import {
   AllFields,
   Fields,
@@ -149,6 +149,7 @@ export function schemaData(schema: Schema): SchemaData {
 }
 
 export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
+  schema = cloneDeep(schema);
   if (data === undefined) {
     return schema;
   }
@@ -175,14 +176,8 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
         break;
       }
       case "group": {
-        const f = schema[name] as ListField;
-        const s = hydrateSchema(f.fields, data[name].value as SchemaData);
-        const value: SchemaData = {};
-        for (const name in s) {
-          value[name] = s[name];
-        }
-        console.log(value);
-        // f.setValue(value);
+        const f = schema[name] as GroupField;
+        f.setValue(hydrateSchema(f.value, data[name] as SchemaData));
         break;
       }
     }
