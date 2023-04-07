@@ -128,6 +128,7 @@ export function deserializeSchema(schema: string): Schema {
 }
 
 export function schemaData(schema: Schema): SchemaData {
+  schema = cloneDeep(schema);
   const formatted: SchemaData = {};
   for (const name in schema) {
     formatted[name] = {
@@ -149,7 +150,6 @@ export function schemaData(schema: Schema): SchemaData {
 }
 
 export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
-  schema = cloneDeep(schema);
   if (data === undefined) {
     return schema;
   }
