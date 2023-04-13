@@ -191,7 +191,7 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
         const f = schema[name] as ListField;
         f.setValue(
           (data[name].value as SchemaData[]).map((data) => {
-            return hydrateSchema(f.fields, data);
+            return hydrateSchema(cloneDeep(f.fields), data);
           })
         );
         break;
