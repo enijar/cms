@@ -136,19 +136,31 @@ export function schemaData(schema: Schema): SchemaData {
   schema = cloneDeep(schema);
   const formatted: SchemaData = {};
   for (const name in schema) {
-    formatted[name] = {
-      type: schema[name].type,
-      value: schema[name].value,
-    };
-    if (schema[name].type === "list") {
-      const field = schema[name] as ListField;
-      formatted[name].value = field.value.map((fields) => {
-        return schemaData(fields);
-      });
-    }
-    if (schema[name].type === "group") {
-      const field = schema[name] as GroupField;
-      formatted[name] = schemaData(field.value);
+    switch (schema[name].type) {
+      case "list": {
+        const field = schema[name] as ListField;
+        formatted[name] = {
+          type: "list",
+          value: field.value.map((fields) => {
+            return schemaData(fields);
+          }),
+        };
+        break;
+      }
+      case "group": {
+        const field = schema[name] as GroupField;
+        formatted[name] = {
+          type: "group",
+          value: schemaData(field.value),
+        };
+        break;
+      }
+      default: {
+        formatted[name] = {
+          type: schema[name].type,
+          value: schema[name].value,
+        };
+      }
     }
   }
   return formatted;
@@ -185,7 +197,7 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
       }
       case "group": {
         const f = schema[name] as GroupField;
-        f.setValue(hydrateSchema(f.value, data[name] as SchemaData));
+        f.setValue(hydrateSchema(f.value, data[name].value as SchemaData));
         break;
       }
     }

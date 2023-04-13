@@ -18,7 +18,7 @@ export default function Content() {
       <Schema
         disabled={saveContent.isLoading}
         schema={home}
-        data={schemaData(content.data as any)}
+        data={content.data as any}
         onSubmit={(schema) => {
           if (saveContent.isLoading) return;
           saveContent.mutate({ name: "home", data: schemaData(schema) });
