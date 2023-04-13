@@ -175,6 +175,7 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
       continue;
     }
     const field = schema[name];
+    field.name = name;
     switch (field.type) {
       case "text": {
         const f = schema[name] as TextField;
