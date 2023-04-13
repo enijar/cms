@@ -30,7 +30,8 @@ export const FieldWrapper = styled.div`
   .rdw-editor-wrapper,
   .rdw-editor-toolbar,
   input,
-  textarea {
+  textarea,
+  button {
     border-radius: 0 !important;
     background-color: var(--background) !important;
     border: 1px solid var(--border) !important;
@@ -85,11 +86,11 @@ export const FieldWrapper = styled.div`
 
   input,
   textarea {
-    padding: 0.2em 1em;
+    padding: 0.25em 0.5em;
   }
 
   .rdw-editor-main {
-    padding-inline: 1em;
+    padding: 0.25em 0.5em !important;
     font-size: 1rem !important;
     max-height: 25em !important;
   }
