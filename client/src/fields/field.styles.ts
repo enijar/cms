@@ -23,16 +23,74 @@ export const FieldWrapper = styled.div`
     font-size: 0.75em;
   }
 
+  --background: #2e2e2e;
+  --border: #777777;
+  --color: #ffffff;
+
   .rdw-editor-wrapper,
+  .rdw-editor-toolbar,
   input,
   textarea {
-    background-color: #ffffff;
-    color: #000000;
+    border-radius: 0 !important;
+    background-color: var(--background) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--color);
+  }
+
+  .rdw-editor-toolbar {
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .rdw-option-active {
+    background-color: #000000 !important;
+  }
+
+  .rdw-option-wrapper,
+  .rdw-dropdown-wrapper,
+  .rdw-dropdown-optionwrapper {
+    background-color: var(--background) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--color) !important;
+
+    img {
+      filter: invert(1);
+    }
+  }
+
+  .rdw-dropdownoption-active,
+  .rdw-dropdownoption-highlighted {
+    background-color: #444444 !important;
+  }
+
+  .rdw-dropdown-carettoopen {
+    border-top-color: var(--color) !important;
+  }
+
+  .rdw-dropdown-carettoclose {
+    border-bottom-color: var(--color) !important;
+  }
+
+  .rdw-option-active {
+    background-color: #000000 !important;
+  }
+
+  .rdw-colorpicker-modal {
+    background-color: var(--background) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: 3px 3px 5px var(--border) !important;
+    left: auto !important;
+    right: 5px !important;
+  }
+
+  input,
+  textarea {
+    padding: 0.2em 1em;
   }
 
   .rdw-editor-main {
     padding-inline: 1em;
-    font-size: 0.75em;
-    max-height: 50ch;
+    font-size: 1rem !important;
+    max-height: 25em !important;
   }
 `;

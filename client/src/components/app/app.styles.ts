@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const AppReset = createGlobalStyle`
   :root {
+    color-scheme: dark;
     --root-scale: 3;
     --root-size: calc(var(--root-scale) * 1vh);
     --root-min: 16px;
