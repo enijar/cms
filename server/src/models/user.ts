@@ -1,11 +1,9 @@
-import { Column, Index, Model, Table } from "sequelize-typescript";
+import { Column, Index, Model, Table, Unique } from "sequelize-typescript";
 
-@Table({
-  tableName: "users",
-  indexes: [{ fields: ["email"] }],
-})
+@Table({ tableName: "users" })
 export default class User extends Model {
-  @Index({ name: "email", unique: true })
+  @Index
+  @Unique({ name: "email", msg: "cdkey_should_be_unique" })
   @Column
   email!: string;
 
