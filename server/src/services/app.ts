@@ -6,6 +6,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import config from "../config";
 import router from "../router";
 import cookies from "../middleware/cookies";
+import getContent from "../actions/api/get-content";
 
 const app = express();
 
@@ -31,6 +32,8 @@ export const createContext = async ({
 };
 
 export type AppContext = trpc.inferAsyncReturnType<typeof createContext>;
+
+app.get("/api/content/:idOrName", getContent);
 
 app.use(
   "/trpc",
