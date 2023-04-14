@@ -12,7 +12,7 @@ export const home = createSchema({
       friends: fields.list({
         name: fields.text(),
         info: fields.group({
-          dob: fields.text(),
+          dob: fields.datetime(),
           height: fields.text(),
         }),
       }),

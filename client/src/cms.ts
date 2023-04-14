@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash";
 import {
   AllFields,
+  DatetimeField,
   Fields,
   GroupField,
   ListField,
@@ -25,6 +26,16 @@ export const fields = {
     return {
       type: "richText",
       name: "richText",
+      value: "",
+      setValue(value) {
+        this.value = value;
+      },
+    };
+  },
+  datetime(): TextField {
+    return {
+      type: "datetime",
+      name: "datetime",
       value: "",
       setValue(value) {
         this.value = value;
@@ -109,6 +120,12 @@ export function deserializeSchema(schema: string): Schema {
         result[name] = f;
         break;
       }
+      case "datetime": {
+        const f = fields.datetime();
+        f.setValue(field.value as string);
+        result[name] = f;
+        break;
+      }
       case "list": {
         const list = deserializeSchema(
           JSON.stringify((data[name] as ListField).fields)
@@ -132,11 +149,48 @@ export function deserializeSchema(schema: string): Schema {
   return createSchema(result);
 }
 
+export function formatDate(date: Date): string {
+  const f = (n: number): string => `${n}`.padStart(2, "0");
+  const year = date.getUTCFullYear();
+  const month = f(date.getUTCMonth() + 1);
+  const day = f(date.getUTCDate());
+  const hours = f(date.getUTCHours());
+  const mins = f(date.getUTCMinutes());
+  const seconds = f(date.getUTCSeconds());
+  return `${year}-${month}-${day} ${hours}:${mins}:${seconds}`;
+}
+
 export function schemaData(schema: Schema): SchemaData {
   schema = cloneDeep(schema);
   const formatted: SchemaData = {};
   for (const name in schema) {
     switch (schema[name].type) {
+      case "datetime": {
+        const field = schema[name] as DatetimeField;
+        let value = field.value;
+        try {
+          const date = new Date(field.value);
+          const timestamp = Date.UTC(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate(),
+            date.getUTCHours(),
+            date.getUTCMinutes(),
+            date.getUTCSeconds(),
+            date.getUTCMilliseconds()
+          );
+          if (!isNaN(timestamp)) {
+            value = formatDate(new Date(timestamp));
+          }
+        } catch {
+          // Ignore date parsing
+        }
+        formatted[name] = {
+          type: "datetime",
+          value: value,
+        };
+        break;
+      }
       case "list": {
         const field = schema[name] as ListField;
         formatted[name] = {
@@ -185,6 +239,24 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
       case "richText": {
         const f = schema[name] as RichTextField;
         f.setValue(data[name].value as string);
+        break;
+      }
+      case "datetime": {
+        const f = schema[name] as DatetimeField;
+        let value = data[name].value as string;
+        try {
+          const utcDate = new Date(Date.parse(value));
+          if (!isNaN(utcDate.getTime())) {
+            const offset = new Date().getTimezoneOffset() * 1000 * 60 * -1;
+            utcDate.setTime(utcDate.getTime() + offset);
+            value = formatDate(
+              new Date(utcDate.setTime(utcDate.getTime() + offset))
+            );
+          }
+        } catch {
+          // Ignore date parsing
+        }
+        f.setValue(value);
         break;
       }
       case "list": {
