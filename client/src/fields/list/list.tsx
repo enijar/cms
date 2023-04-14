@@ -7,6 +7,7 @@ import Accordion, { AccordionApi } from "@/components/accordion/accordion";
 import Fields from "@/components/fields/fields";
 import Button from "@/components/button/button";
 import Label from "@/components/label/label";
+import { subscription } from "@/cms";
 
 type Props = {
   field: ListField;
@@ -17,7 +18,29 @@ export default function List({ field }: Props) {
     ...field.value,
   ]);
 
+  const [resetKey, setResetKey] = React.useState(1);
+
+  const itemTitles = React.useMemo<string[]>(() => {
+    return value.map((fields) => {
+      const key = field.options?.titleField as keyof typeof fields;
+      const dynamicTitle = fields[key]?.value as string;
+      let title = dynamicTitle ?? field.name;
+      if (dynamicTitle.trim().length === 0) {
+        title = field.name;
+      }
+      return title;
+    });
+  }, [value, field, resetKey]);
+
   const accordionRef = React.useRef<AccordionApi | null>(null);
+
+  React.useEffect(() => {
+    return subscription.subscribe("change", () => {
+      setResetKey((resetKey) => {
+        return (resetKey + 1) % 1000;
+      });
+    });
+  }, []);
 
   return (
     <ListWrapper>
@@ -32,14 +55,8 @@ export default function List({ field }: Props) {
         }}
         items={value.map((fields, index) => {
           const n = index + 1;
-          // @ts-ignore
-          const dynamicTitle = fields[field.options?.titleField]?.value;
-          let title = dynamicTitle ?? field.name;
-          if (dynamicTitle.trim("").length === 0) {
-            title = field.name;
-          }
           return {
-            title: `${n}. ${capitalCase(pluralize(title, 1))}`,
+            title: `${n}. ${capitalCase(pluralize(itemTitles[index], 1))}`,
             children: <Fields key={index} schema={fields} />,
           };
         })}

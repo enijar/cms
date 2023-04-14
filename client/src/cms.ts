@@ -13,6 +13,34 @@ import {
   TextField,
 } from "@/../../shared/types";
 
+const subscriptions = new Map<string, Array<(...args: any[]) => void>>();
+
+export const subscription = {
+  emit(event: string, ...args: any[]) {
+    const subs = subscriptions.get(event);
+    if (subs === undefined) return;
+    for (const sub of subs) {
+      sub(...args);
+    }
+  },
+  subscribe(event: string, fn: (...args: any[]) => void): () => void {
+    if (!subscriptions.has(event)) {
+      subscriptions.set(event, []);
+    }
+    const subs = subscriptions.get(event) ?? [];
+    subs.push(fn);
+    subscriptions.set(event, subs);
+    return () => {
+      if (!subscriptions.has(event)) return;
+      const subs = subscriptions.get(event) ?? [];
+      subscriptions.set(
+        event,
+        subs.filter((item) => item !== fn)
+      );
+    };
+  },
+};
+
 export const fields = {
   text(): TextField {
     return {
@@ -21,6 +49,7 @@ export const fields = {
       value: "",
       setValue(value) {
         this.value = value;
+        subscription.emit("change", this.value);
       },
     };
   },
@@ -31,6 +60,7 @@ export const fields = {
       value: "",
       setValue(value) {
         this.value = value;
+        subscription.emit("change", this.value);
       },
     };
   },
@@ -41,6 +71,7 @@ export const fields = {
       value: "",
       setValue(value) {
         this.value = value;
+        subscription.emit("change", this.value);
       },
     };
   },
@@ -51,6 +82,7 @@ export const fields = {
       value: "",
       setValue(value) {
         this.value = value;
+        subscription.emit("change", this.value);
       },
     };
   },
@@ -63,12 +95,15 @@ export const fields = {
       value: [],
       setValue(value) {
         this.value = value;
+        subscription.emit("change", value);
       },
       add() {
         this.value.push(createSchema(this.fields));
+        subscription.emit("change", this.value);
       },
       remove(index) {
         this.value = this.value.filter((_, i) => i !== index);
+        subscription.emit("change", this.value);
       },
     };
   },
@@ -79,6 +114,7 @@ export const fields = {
       value: fields,
       setValue(value) {
         this.value = value;
+        subscription.emit("change", this.value);
       },
     };
   },
