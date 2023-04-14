@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { capitalCase } from "change-case";
 import * as schemas from "@/../../config/schemas";
 
 export default function ContentList() {
@@ -13,7 +14,7 @@ export default function ContentList() {
       {schemaNames.map((name, index) => {
         return (
           <div key={index}>
-            <Link to={`/content/${name}`}>{name}</Link>
+            <Link to={`/content/${name}`}>{capitalCase(name)}</Link>
           </div>
         );
       })}
