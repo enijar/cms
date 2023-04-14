@@ -49,16 +49,4 @@ Visit `/api/content/homePage` on the server and you will see the populated schem
 
 ### Contributing
 
-Set up `ENV_VARS`:
-
-```shell
-cp client/.env.example client/.env
-cp server/.env.example server/.env
-```
-
-Start in development mode:
-
-```shell
-npm install
-npm start
-```
+Check out the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
