@@ -2,91 +2,50 @@
 
 > ⚠️ WIP: still under heavy development. This is currently only a proof of concept.
 
-Schema based CMS. Define a schema and have it:
+Generate a full CMS from a simple schema.
 
-1. Generate UI for users to update a schema
-2. Generate REST JSON API
+### Getting Started
 
-### Why?
-
-Sometimes all you need is a basic CMS that takes in a schema and handles the rest for you, e.g. saving data, creating an API, etc.
-
-### Schema
-
-Here's how to define a schema and render it:
+Define and export a schema inside `config/schemas.ts`:
 
 ```javascript
-import React from "react";
-import { createSchema, fields, format, serializeSchema } from "@/cms";
-import Schema from "@/components/schema/schema";
+import { createSchema, fields } from "../client/src/cms";
 
-const schema = createSchema({
+export const homePage = createSchema({
   title: fields.text(),
   description: fields.richText(),
-  person: fields.group({
-    name: fields.text(),
-    bio: fields.richText(),
-  }),
-  locations: fields.list({
-    address: fields.text(),
-    info: fields.richText(),
-  }),
 });
+```
 
-function App() {
-  return (
-    <Schema
-      schema={schema}
-      onSubmit={(schema) => {
-        // So something with the submitted schema:
-        const serialized = serializeSchema(schema);
-        console.log(serialized);
-        console.log(format(schema));
-      }}
-    />
-  );
+Visit `/content/homePage` on the client and populate the fields with some data:
+
+![content-screenshot.png](.github/misc/content-screenshot.png)
+
+Visit `/api/content/homePage` on the server and you will see the populated schema in JSON format:
+
+```json
+{
+  "title": {
+    "type": "text",
+    "value": "t11"
+  },
+  "description": {
+    "type": "richText",
+    "value": "<p>...</p>"
+  }
 }
 ```
 
 ### Fields
 
-**text**
-
-```javascript
-const schema = createSchema({
-  field: fields.text(),
-});
-```
-
-**richText**
-
-```javascript
-const schema = createSchema({
-  field: fields.richText(),
-});
-```
-
-**list**
-
-```javascript
-const schema = createSchema({
-  field: fields.list({
-    field: fields.text(),
-    // Other fields...
-  }),
-});
-```
-
-**group**
-
-```javascript
-const schema = createSchema({
-  field: fields.group({
-    field: fields.text(),
-    // Other fields...
-  }),
-});
-```
+| Field    | Description                |
+| -------- | -------------------------- |
+| text     | Basic text input           |
+| richText | WYSIWYG editor             |
+| color    | HEX/RGBA color picker      |
+| datetime | Date and time picker       |
+| list     | Repeatable array of fields |
+| group    | Group object of fields     |
 
 ### Contributing
 
