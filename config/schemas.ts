@@ -29,3 +29,10 @@ export const about = createSchema({
   title: fields.text(),
   description: fields.richText(),
 });
+
+export const pages = createSchema({
+  pages: fields.list({
+    name: fields.text(),
+    title: fields.text(),
+  }),
+});

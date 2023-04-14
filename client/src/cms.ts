@@ -88,10 +88,6 @@ export function createSchema(fields: Fields): Schema {
   for (const name in fields) {
     const field = cloneDeep(fields[name]);
     field.name = name;
-    if (field.type === "list") {
-      const listField = field as ListField;
-      listField.value = [createSchema(listField.fields)];
-    }
     if (field.type === "group") {
       const groupField = field as GroupField;
       groupField.value = createSchema(groupField.value);

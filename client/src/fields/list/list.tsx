@@ -22,6 +22,7 @@ export default function List({ field }: Props) {
   return (
     <ListWrapper>
       <Label text={pluralize(field.name, 0)} />
+      {value.length === 0 && <>No {pluralize(field.name, 0)}</>}
       <Accordion
         ref={accordionRef}
         onRemove={(index) => {
