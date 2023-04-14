@@ -23,7 +23,7 @@ export default function Color({ field }: Props) {
       <ColorOutput ref={outputRef}>
         <input
           value={value}
-          name={field.name}
+          name={field.name === "" ? "#000000" : field.name}
           type="color"
           onChange={(event) => {
             field.setValue(event.target.value);
