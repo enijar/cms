@@ -21,7 +21,7 @@ Visit `/content/homePage` on the client and populate the fields with some data:
 
 ![content-screenshot.png](.github/misc/content-screenshot.png)
 
-Visit `/api/content/homePage` on the server and you will see the populated schema in JSON format:
+Visit `/api/content/homePage` on the server, and you will see the populated schema in JSON format:
 
 ```json
 {
