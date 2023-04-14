@@ -85,8 +85,15 @@ export const FieldWrapper = styled.div`
   }
 
   input,
-  textarea {
+  textarea,
+  button {
     padding: 0.25em 0.5em;
+  }
+
+  button {
+    background-color: var(--background) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--color) !important;
   }
 
   .rdw-editor-main {
