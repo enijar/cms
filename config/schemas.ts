@@ -24,3 +24,8 @@ export const home = createSchema({
     info: fields.richText(),
   }),
 });
+
+export const about = createSchema({
+  title: fields.text(),
+  description: fields.richText(),
+});

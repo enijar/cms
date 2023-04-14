@@ -8,14 +8,14 @@ import Button from "@/components/button/button";
 type Props = {
   schema: SchemaType;
   onSubmit: (schema: SchemaType) => void;
-  data?: SchemaData;
+  data: SchemaData | null;
   disabled?: boolean;
 };
 
 export default function Schema({
   schema,
   onSubmit,
-  data,
+  data = null,
   disabled = false,
 }: Props) {
   const hydratedSchema = React.useMemo(() => {

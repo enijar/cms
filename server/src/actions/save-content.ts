@@ -1,26 +1,19 @@
 import { z } from "zod";
-import { Op, WhereOptions } from "sequelize";
 import Content from "../models/content";
 import trpc from "../services/trpc";
 
 const saveContent = trpc.procedure
   .input(
     z.object({
-      id: z.number().min(1).optional(),
-      name: z.string().min(1).optional(),
+      name: z.string().min(1),
       data: z.any(),
     })
   )
   .mutation(async ({ input }) => {
     try {
-      const or: WhereOptions[] = [];
-      if (input.id !== undefined) {
-        or.push({ id: input.id });
-      }
-      if (input.name !== undefined) {
-        or.push({ name: input.name });
-      }
-      const content = await Content.findOne({ where: { [Op.or]: or } });
+      const [content] = await Content.findOrCreate({
+        where: { name: input.name },
+      });
       if (content === null) {
         return false;
       }

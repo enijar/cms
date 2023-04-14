@@ -4,7 +4,7 @@ import * as schemas from "@/../../config/schemas";
 
 export default function ContentList() {
   const schemaNames = React.useMemo(() => {
-    return Object.keys(schemas);
+    return Object.keys(schemas).reverse();
   }, [schemas]);
 
   return (

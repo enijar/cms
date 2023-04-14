@@ -18,12 +18,16 @@ export default function Content() {
     return <>Loading...</>;
   }
 
+  if (content.data === false) {
+    return <>Schema not found</>;
+  }
+
   return (
     <>
       <h1>Content</h1>
       <Schema
         disabled={saveContent.isLoading}
-        schema={schemas.home}
+        schema={schemas[name! as keyof typeof schemas]}
         data={content.data as any}
         onSubmit={(schema) => {
           if (saveContent.isLoading) return;

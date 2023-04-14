@@ -180,8 +180,11 @@ export function schemaData(schema: Schema): SchemaData {
   return formatted;
 }
 
-export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
-  if (data === undefined) {
+export function hydrateSchema(
+  schema: Schema,
+  data: SchemaData | null = null
+): Schema {
+  if (data === null) {
     return schema;
   }
   for (const name in schema) {
