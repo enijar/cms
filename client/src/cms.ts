@@ -6,6 +6,7 @@ import {
   Fields,
   GroupField,
   ListField,
+  ListOptions,
   RichTextField,
   Schema,
   SchemaData,
@@ -53,10 +54,11 @@ export const fields = {
       },
     };
   },
-  list(fields: Fields): ListField {
+  list(fields: Fields, options?: ListOptions): ListField {
     return {
       type: "list",
       name: "list",
+      options,
       fields,
       value: [],
       setValue(value) {

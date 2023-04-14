@@ -24,6 +24,7 @@ export type ColorField = Field & {
 };
 
 export type ListField = Field & {
+  options?: ListOptions;
   fields: Fields;
   value: Fields[];
   setValue: (value: ListField["value"]) => void;
@@ -34,6 +35,10 @@ export type ListField = Field & {
 export type GroupField = Field & {
   value: Fields;
   setValue: (value: GroupField["value"]) => void;
+};
+
+export type ListOptions = {
+  titleField: string;
 };
 
 export type AllFields =

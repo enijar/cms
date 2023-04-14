@@ -32,8 +32,14 @@ export default function List({ field }: Props) {
         }}
         items={value.map((fields, index) => {
           const n = index + 1;
+          // @ts-ignore
+          const dynamicTitle = fields[field.options?.titleField]?.value;
+          let title = dynamicTitle ?? field.name;
+          if (dynamicTitle.trim("").length === 0) {
+            title = field.name;
+          }
           return {
-            title: `${n}. Edit ${capitalCase(pluralize(field.name, 1))}`,
+            title: `${n}. ${capitalCase(pluralize(title, 1))}`,
             children: <Fields key={index} schema={fields} />,
           };
         })}

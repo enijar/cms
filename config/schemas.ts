@@ -31,8 +31,11 @@ export const about = createSchema({
 });
 
 export const pages = createSchema({
-  pages: fields.list({
-    name: fields.text(),
-    title: fields.text(),
-  }),
+  pages: fields.list(
+    {
+      name: fields.text(),
+      title: fields.text(),
+    },
+    { titleField: "name" }
+  ),
 });
