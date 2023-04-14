@@ -39,3 +39,12 @@ export const pages = createSchema({
     { titleField: "name" }
   ),
 });
+
+export const test = createSchema({
+  items: fields.list(
+    {
+      name: fields.text(),
+    },
+    { titleField: "name" }
+  ),
+});
