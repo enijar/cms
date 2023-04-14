@@ -6,6 +6,7 @@ export const home = createSchema({
   person: fields.group({
     name: fields.text(),
     bio: fields.richText(),
+    skinTone: fields.color(),
     partner: fields.group({
       name: fields.text(),
       bio: fields.richText(),

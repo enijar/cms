@@ -1,5 +1,5 @@
 export type Field = {
-  type: "text" | "richText" | "datetime" | "list" | "group";
+  type: "text" | "richText" | "color" | "datetime" | "list" | "group";
   name: string;
 };
 
@@ -18,6 +18,11 @@ export type DatetimeField = Field & {
   setValue: (value: DatetimeField["value"]) => void;
 };
 
+export type ColorField = Field & {
+  value: string;
+  setValue: (value: ColorField["value"]) => void;
+};
+
 export type ListField = Field & {
   fields: Fields;
   value: Fields[];
@@ -34,6 +39,7 @@ export type GroupField = Field & {
 export type AllFields =
   | TextField
   | RichTextField
+  | ColorField
   | DatetimeField
   | ListField
   | GroupField;

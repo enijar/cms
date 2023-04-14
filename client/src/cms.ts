@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash";
 import {
   AllFields,
+  ColorField,
   DatetimeField,
   Fields,
   GroupField,
@@ -26,6 +27,16 @@ export const fields = {
     return {
       type: "richText",
       name: "richText",
+      value: "",
+      setValue(value) {
+        this.value = value;
+      },
+    };
+  },
+  color(): ColorField {
+    return {
+      type: "color",
+      name: "color",
       value: "",
       setValue(value) {
         this.value = value;
@@ -96,57 +107,6 @@ export function schemaToFields(schema: Schema): AllFields[] {
     fields.push(schema[name]);
   }
   return fields;
-}
-
-export function serializeSchema(schema: Schema): string {
-  return JSON.stringify(schema);
-}
-
-export function deserializeSchema(schema: string): Schema {
-  const result: Schema = {};
-  const data = JSON.parse(schema) as Fields;
-  for (const name in data) {
-    const field = data[name];
-    switch (field.type) {
-      case "text": {
-        const f = fields.text();
-        f.setValue(field.value as string);
-        result[name] = f;
-        break;
-      }
-      case "richText": {
-        const f = fields.richText();
-        f.setValue(field.value as string);
-        result[name] = f;
-        break;
-      }
-      case "datetime": {
-        const f = fields.datetime();
-        f.setValue(field.value as string);
-        result[name] = f;
-        break;
-      }
-      case "list": {
-        const list = deserializeSchema(
-          JSON.stringify((data[name] as ListField).fields)
-        );
-        const f = fields.list(list);
-        f.setValue(field.value as Fields[]);
-        result[name] = f;
-        break;
-      }
-      case "group": {
-        const group = deserializeSchema(
-          JSON.stringify((data[name] as GroupField).value)
-        );
-        const f = fields.group(group);
-        f.setValue(group);
-        result[name] = f;
-        break;
-      }
-    }
-  }
-  return createSchema(result);
 }
 
 export function formatDate(date: Date): string {
@@ -238,6 +198,11 @@ export function hydrateSchema(schema: Schema, data?: SchemaData): Schema {
       }
       case "richText": {
         const f = schema[name] as RichTextField;
+        f.setValue(data[name].value as string);
+        break;
+      }
+      case "color": {
+        const f = schema[name] as ColorField;
         f.setValue(data[name].value as string);
         break;
       }
