@@ -268,3 +268,10 @@ export function hydrateSchema(
   }
   return schema;
 }
+
+export function swap(array: any[], index: number, newIndex: number) {
+  const temp = array[index];
+  array[index] = array[newIndex];
+  array[newIndex] = temp;
+  return array;
+}

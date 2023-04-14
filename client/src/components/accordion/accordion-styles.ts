@@ -30,6 +30,29 @@ export const AccordionItemHeader = styled.div`
     font-size: 0.6em;
     cursor: pointer;
   }
+
+  > span {
+    display: flex;
+    gap: 1ch;
+  }
+`;
+
+export const AccordionItemReOrderingArrows = styled.div`
+  display: flex;
+  gap: 0.25em;
+
+  svg {
+    height: 1em;
+    aspect-ratio: 1 / 1;
+
+    path {
+      fill: #ffffff;
+    }
+
+    :last-child {
+      transform: rotate(180deg);
+    }
+  }
 `;
 
 export const AccordionItemWrapper = styled.div`

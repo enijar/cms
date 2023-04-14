@@ -7,7 +7,7 @@ import Accordion, { AccordionApi } from "@/components/accordion/accordion";
 import Fields from "@/components/fields/fields";
 import Button from "@/components/button/button";
 import Label from "@/components/label/label";
-import { subscription } from "@/cms";
+import { subscription, swap } from "@/cms";
 
 type Props = {
   field: ListField;
@@ -48,6 +48,12 @@ export default function List({ field }: Props) {
           field.remove(index);
           const value = [...field.value];
           setValue(value);
+        }}
+        onReOrder={(index, newIndex) => {
+          const ordered = [...swap([...value], index, newIndex)];
+          setValue([...ordered]);
+          field.setValue([...ordered]);
+          console.log(ordered);
         }}
         items={value.map((fields, index) => {
           const n = index + 1;
