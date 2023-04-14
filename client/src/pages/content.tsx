@@ -1,11 +1,17 @@
 import React from "react";
-import { home } from "@/../../config/schemas";
+import { useParams } from "react-router-dom";
+import * as schemas from "@/../../config/schemas";
 import trpc from "@/services/trpc";
 import { schemaData } from "@/cms";
 import Schema from "@/components/schema/schema";
 
+type Params = {
+  name: string;
+};
+
 export default function Content() {
-  const content = trpc.getContent.useQuery({ name: "home" });
+  const { name } = useParams<Params>();
+  const content = trpc.getContent.useQuery({ name: name! });
   const saveContent = trpc.saveContent.useMutation();
 
   if (content.isLoading) {
@@ -17,11 +23,11 @@ export default function Content() {
       <h1>Content</h1>
       <Schema
         disabled={saveContent.isLoading}
-        schema={home}
+        schema={schemas.home}
         data={content.data as any}
         onSubmit={(schema) => {
           if (saveContent.isLoading) return;
-          saveContent.mutate({ name: "home", data: schemaData(schema) });
+          saveContent.mutate({ name: name!, data: schemaData(schema) });
         }}
       />
     </>
