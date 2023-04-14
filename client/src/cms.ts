@@ -68,7 +68,7 @@ export const fields = {
     return {
       type: "color",
       name: "color",
-      value: "",
+      value: "#000000",
       setValue(value) {
         this.value = value;
         subscription.emit("change", this.value);
@@ -164,17 +164,9 @@ export function schemaData(schema: Schema): SchemaData {
         let value = field.value;
         try {
           const date = new Date(field.value);
-          const timestamp = Date.UTC(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate(),
-            date.getUTCHours(),
-            date.getUTCMinutes(),
-            date.getUTCSeconds(),
-            date.getUTCMilliseconds()
-          );
-          if (!isNaN(timestamp)) {
-            value = formatDate(new Date(timestamp));
+          if (!isNaN(date.getTime())) {
+            const offset = new Date().getTimezoneOffset() * 1000 * 60;
+            value = formatDate(new Date(date.getTime() + offset));
           }
         } catch {
           // Ignore date parsing
@@ -249,11 +241,8 @@ export function hydrateSchema(
         try {
           const utcDate = new Date(Date.parse(value));
           if (!isNaN(utcDate.getTime())) {
-            const offset = new Date().getTimezoneOffset() * 1000 * 60 * -1;
-            utcDate.setTime(utcDate.getTime() + offset);
-            value = formatDate(
-              new Date(utcDate.setTime(utcDate.getTime() + offset))
-            );
+            const offset = new Date().getTimezoneOffset() * 60 * 1000;
+            value = formatDate(new Date(utcDate.getTime() - offset));
           }
         } catch {
           // Ignore date parsing

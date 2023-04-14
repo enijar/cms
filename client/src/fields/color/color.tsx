@@ -14,7 +14,7 @@ export default function Color({ field }: Props) {
   React.useEffect(() => {
     const output = outputRef.current;
     if (output === null) return;
-    output.style.setProperty("--color", value);
+    output.style.setProperty("--color", value === "" ? "#000000" : value);
   }, [value]);
 
   return (
@@ -22,8 +22,8 @@ export default function Color({ field }: Props) {
       <Label text={field.name} />
       <ColorOutput ref={outputRef}>
         <input
-          value={value}
-          name={field.name === "" ? "#000000" : field.name}
+          value={value === "" ? "#000000" : value}
+          name={field.name}
           type="color"
           onChange={(event) => {
             field.setValue(event.target.value);
