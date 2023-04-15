@@ -38,11 +38,14 @@ export default function List({ field }: Props) {
     });
   }, []);
 
+  const [orderKey, setOrderKey] = React.useState("");
+
   return (
     <ListWrapper>
       <Label text={pluralize(field.name, 0)} />
       {value.length === 0 && <>No {pluralize(field.name, 0)}</>}
       <Accordion
+        key={orderKey}
         ref={accordionRef}
         onRemove={(index) => {
           field.remove(index);
@@ -53,7 +56,12 @@ export default function List({ field }: Props) {
           const ordered = [...swap([...value], index, newIndex)];
           setValue([...ordered]);
           field.setValue([...ordered]);
-          console.log(ordered);
+          const indices = swap(
+            value.map((_, i) => i),
+            index,
+            newIndex
+          );
+          setOrderKey(indices.join(""));
         }}
         items={value.map((fields, index) => {
           const n = index + 1;

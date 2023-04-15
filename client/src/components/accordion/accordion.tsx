@@ -40,7 +40,6 @@ function Accordion(
             onClose={() => setOpenIndex(-1)}
             onRemove={() => onRemove(index)}
             onReOrder={(dir) => {
-              const sorted = [...items];
               if (dir === -1 && index === 0) return;
               if (dir === 1 && index === items.length - 1) return;
               const newIndex = index + dir;
