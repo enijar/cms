@@ -76,12 +76,21 @@ export const FieldWrapper = styled.div`
     background-color: #000000 !important;
   }
 
-  .rdw-colorpicker-modal {
+  .rdw-colorpicker-modal,
+  .rdw-embedded-modal,
+  .rdw-emoji-modal,
+  .rdw-image-modal {
     background-color: var(--background) !important;
     border: 1px solid var(--border) !important;
     box-shadow: 3px 3px 5px var(--border) !important;
     left: auto !important;
     right: 5px !important;
+  }
+
+  .rdw-embedded-modal {
+    left: 5px !important;
+    right: auto !important;
+    height: auto !important;
   }
 
   input,
