@@ -64,9 +64,8 @@ export default function List({ field }: Props) {
           setOrderKey(indices.join(""));
         }}
         items={value.map((fields, index) => {
-          const n = index + 1;
           return {
-            title: `${n}. ${capitalCase(pluralize(itemTitles[index], 1))}`,
+            title: capitalCase(pluralize(itemTitles[index], 1)),
             children: <Fields key={index} schema={fields} />,
           };
         })}
