@@ -12,14 +12,11 @@ export default function ContentList() {
   return (
     <>
       <Table
-        headers={["Content", "Actions"]}
+        headers={["Content"]}
         rows={schemaNames.map((name, index) => {
           return [
             <div key={index}>
               <Link to={`/content/${name}`}>{capitalCase(name)}</Link>
-            </div>,
-            <div>
-              <button>Delete</button>
             </div>,
           ];
         })}
