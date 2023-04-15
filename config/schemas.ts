@@ -1,4 +1,4 @@
-import { createSchema, fields } from "../client/src/cms";
+import { createSchema, fields } from "../client/src/cms/cms";
 
 export const home = createSchema({
   title: fields.text(),

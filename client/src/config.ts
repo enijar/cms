@@ -1,5 +1,12 @@
+import cmsConfig from "@/cms/config";
+
 const config = {
-  apiUrl: process.env.API_URL ?? "http://localhost:3000",
-};
+  apiUrl: cmsConfig.apiUrl,
+  menuLinks: [
+    ...cmsConfig.menuLinks,
+    // Your links here
+    { to: "/example", label: "Example", routeMatcher: "/example" },
+  ],
+} as const;
 
 export default config;
