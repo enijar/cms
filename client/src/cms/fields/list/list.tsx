@@ -21,10 +21,14 @@ export default function List({ field }: Props) {
   const [resetKey, setResetKey] = React.useState(1);
 
   const itemTitles = React.useMemo<string[]>(() => {
-    return value.map((fields) => {
+    return value.map((fields, index) => {
       const key = field.options?.titleField as keyof typeof fields;
       const dynamicTitle = (fields[key]?.value ?? "") as string;
-      return dynamicTitle.trim().length === 0 ? field.name : dynamicTitle;
+      let title = field.name;
+      if (dynamicTitle.trim().length > 0) {
+        title = dynamicTitle;
+      }
+      return title;
     });
   }, [value, field, resetKey]);
 
